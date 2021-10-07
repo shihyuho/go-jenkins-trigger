@@ -79,7 +79,7 @@ func main() {
   flags.StringVar(&c.Jenkins.Url, "jenkins-url", c.Jenkins.Url, "URL of the Jenkins server")
   flags.StringVar(&c.Jenkins.User, "jenkins-user", c.Jenkins.User, "User for accessing Jenkins")
   flags.StringVar(&c.Jenkins.Pat, "jenkins-pat", c.Jenkins.Pat, "Personal access token (PAT) for accessing Jenkins")
-  flags.BoolVarP(&c.Insecure, "insecure", "k", c.Insecure, "Allow insecure Jenkins server connections when using SSL")
+  flags.BoolVarP(&c.Jenkins.Insecure, "insecure", "k", c.Jenkins.Insecure, "Allow insecure Jenkins server connections when using SSL")
   flags.StringVarP(&c.Job.Name, "job", "j", c.Job.Name, "The name of the Jenkins job to run")
   flags.StringSliceVarP(&params.slice, "params", "p", params.slice, "The parameters of the job in key=value format, can specify multiple or separate parameters with commas, e.g. foo=bar,baz=qux")
   flags.StringVarP(&params.json, "params-json", "P", params.json, "The parameters of the job in JSON format, e.g. {\"foo\":\"bar\",\"baz\":\"qux\"}")
@@ -100,7 +100,7 @@ func triggerBuild(c config) error {
 
   fmt.Printf("Triggering Jenkins build for job: %+v, wait: %+v\n", c.Job, c.Wait)
 
-  jenkins, err := gojenkins.CreateJenkins(createHttpClient(c.Insecure), c.Jenkins.Url, c.Jenkins.User, c.Jenkins.Pat).Init(ctx)
+  jenkins, err := gojenkins.CreateJenkins(createHttpClient(c.Jenkins.Insecure), c.Jenkins.Url, c.Jenkins.User, c.Jenkins.Pat).Init(ctx)
   if err != nil {
     return err
   }
@@ -167,7 +167,6 @@ type config struct {
   Jenkins  jenkins
   Job      job
   Wait     wait
-  Insecure bool
 }
 
 type wait struct {
@@ -177,9 +176,10 @@ type wait struct {
 }
 
 type jenkins struct {
-  Url  string
-  User string
-  Pat  string
+  Url      string
+  User     string
+  Pat      string
+  Insecure bool
 }
 
 type job struct {
