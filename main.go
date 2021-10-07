@@ -95,12 +95,6 @@ func main() {
   }
 }
 
-func createHttpClient(insecure bool) *http.Client {
-  return &http.Client{Transport: &http.Transport{
-    TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure},
-  }}
-}
-
 func triggerBuild(c config) error {
   ctx := context.Background()
 
@@ -151,6 +145,12 @@ func pollBuildResult(c config, jenkins *gojenkins.Jenkins, queueId int64) func()
 
     return retry.Unrecoverable(fmt.Errorf("Job %s Build number %d did not complete successfully\n", c.Job.Name, build.GetBuildNumber()))
   }
+}
+
+func createHttpClient(insecure bool) *http.Client {
+  return &http.Client{Transport: &http.Transport{
+    TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure},
+  }}
 }
 
 type IsStillRunning struct {
