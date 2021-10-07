@@ -15,6 +15,7 @@ Check out [How to get the API Token for Jenkins](https://stackoverflow.com/quest
 | jenkins-url | URL of Jenkins server. e.g. http://myjenkins.com:8080. |
 | jenkins-user | User name of Jenkins. |
 | jenkins-pat | Personal access token (PAT) for accessing Jenkins. |
+| insecure | Allow insecure Jenkins server connections when using SSL. |
 | job | The name of the Jenkins job to run. |
 | params | Optional, The parameters of the job in key=value format, can specify multiple or separate parameters with commas, e.g. foo=bar,baz=qux. |
 | params-json | Optional, The parameters of the job in JSON format, e.g. {"foo":"bar","baz":"qux"} |

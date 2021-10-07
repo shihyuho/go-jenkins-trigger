@@ -14,6 +14,10 @@ inputs:
   jenkins-pat:
     description: 'Personal access token (PAT) for accessing Jenkins. Store this in a secret for security'
     required: false
+  insecure:
+    description: 'Allow insecure Jenkins server connections when using SSL'
+    required: false
+    default: false
   job:
     description: 'The name of the Jenkins job to run'
     required: true
@@ -42,6 +46,7 @@ runs:
     - --jenkins-url=${{ inputs.jenkins-url }}
     - --jenkins-user=${{ inputs.jenkins-user }}
     - --jenkins-pat=${{ inputs.jenkins-pat }}
+    - --insecure=${{ inputs.insecure }}
     - --job=${{ inputs.job }}
     - --params=${{ inputs.params }}
     - --params-json=${{ inputs.params-json }}

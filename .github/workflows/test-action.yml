@@ -44,6 +44,7 @@ jobs:
           jenkins-url: "${{ secrets.TEST_JENKINS_URL }}"
           jenkins-user: "${{ secrets.TEST_JENKINS_USER }}"
           jenkins-pat: "${{ secrets.TEST_JENKINS_PAT }}"
+          insecure: "${{ secrets.TEST_INSECURE }}"
           job: "${{ secrets.TEST_JOB }}"
           params: "foo=${{ github.ref }}"
           params-json: "${{ secrets.TEST_PARAM_JSON }}"
