@@ -47,7 +47,6 @@ Use '--max-attempts' flag to set the max count of polling for results.
 )
 
 func main() {
-
   c := config{
     Jenkins: jenkins{
       Url: defaultJenkinsUrl,
@@ -96,16 +95,14 @@ func main() {
 }
 
 func triggerBuild(c config) error {
-  ctx := context.Background()
-
   fmt.Printf("Triggering Jenkins build for job: %+v, wait: %+v\n", c.Job, c.Wait)
 
-  jenkins, err := gojenkins.CreateJenkins(createHttpClient(c.Jenkins.Insecure), c.Jenkins.Url, c.Jenkins.User, c.Jenkins.Pat).Init(ctx)
+  jenkins, err := c.Jenkins.createClient()
   if err != nil {
     return err
   }
 
-  queueId, err := jenkins.BuildJob(ctx, c.Job.Name, c.Job.Params)
+  queueId, err := jenkins.BuildJob(context.Background(), c.Job.Name, c.Job.Params)
   if err != nil {
     return err
   }
@@ -125,32 +122,25 @@ func triggerBuild(c config) error {
 
 func pollBuildResult(c config, jenkins *gojenkins.Jenkins, queueId int64) func() error {
   return func() error {
-    ctx := retry.DefaultContext
     fmt.Printf("Polling build result for job %s\n", c.Job.Name)
 
-    build, err := jenkins.GetBuildFromQueueID(ctx, queueId)
+    build, err := jenkins.GetBuildFromQueueID(context.Background(), queueId)
     if err != nil {
       return err
     }
 
-    if build.IsGood(ctx) {
+    if build.IsGood(context.Background()) {
       fmt.Printf("Job %s, build number %d successfully\n", c.Job.Name, build.GetBuildNumber())
       return nil
     }
 
-    if build.IsRunning(ctx) {
+    if build.IsRunning(context.Background()) {
       fmt.Printf("Job %s, build number %d is still running, retry after %s\n", c.Job.Name, build.GetBuildNumber(), c.Wait.PollTime)
       return &IsStillRunning{time.Now(), c.Job.Name, build.GetBuildNumber()}
     }
 
     return retry.Unrecoverable(fmt.Errorf("Job %s Build number %d did not complete successfully\n", c.Job.Name, build.GetBuildNumber()))
   }
-}
-
-func createHttpClient(insecure bool) *http.Client {
-  return &http.Client{Transport: &http.Transport{
-    TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure},
-  }}
 }
 
 type IsStillRunning struct {
@@ -182,6 +172,13 @@ type jenkins struct {
   Insecure bool
 }
 
+func (j *jenkins) createClient() (*gojenkins.Jenkins, error) {
+  client := &http.Client{Transport: &http.Transport{
+    TLSClientConfig: &tls.Config{InsecureSkipVerify: j.Insecure},
+  }}
+  return gojenkins.CreateJenkins(client, j.Url, j.User, j.Pat).Init(context.Background())
+}
+
 type job struct {
   Name   string
   Params map[string]string
@@ -201,7 +198,7 @@ func (p *params) init() (map[string]string, error) {
   }
   for _, v := range p.slice {
     split := strings.Split(v, "=")
-    params[strings.TrimSpace(split[0])] = strings.TrimSpace(strings.Join(split[1:], "="))
+    params[split[0]] = strings.Join(split[1:], "=")
   }
   return params, nil
 }
