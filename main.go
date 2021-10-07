@@ -143,6 +143,7 @@ func pollBuildResult(c config, jenkins *gojenkins.Jenkins, queueId int64) func()
   }
 }
 
+// IsStillRunning indicate a Jenkins job is not done yet
 type IsStillRunning struct {
   time        time.Time
   jobName     string
