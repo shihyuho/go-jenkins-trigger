@@ -115,6 +115,7 @@ func triggerBuild(c config) error {
 
 	return retry.Do(
 		pollBuildResult(c, jenkins, queueId),
+		retry.DelayType(retry.FixedDelay),
 		retry.Delay(c.Wait.PollTime),
 		retry.Attempts(c.Wait.MaxAttempts),
 	)
