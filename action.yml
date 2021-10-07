@@ -22,10 +22,10 @@ inputs:
     description: 'The name of the Jenkins job to run'
     required: true
   params:
-    description: 'The parameters of the job in key=value format, can specify multiple or separate parameters with commas, e.g. foo=bar,baz=qux'
+    description: 'The parameters of the job in key=value format, can specify multiple or separate parameters with commas, e.g., foo=bar,baz=qux'
     required: false
   params-json:
-    description: 'The parameters of the job in JSON format, e.g. {"foo":"bar","baz":"qux"}'
+    description: 'The parameters of the job in JSON format, e.g., {"foo":"bar","baz":"qux"}'
     required: false
   wait:
     description: 'true/false, Wait for the job to complete, and return the results'

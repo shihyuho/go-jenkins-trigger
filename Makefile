@@ -20,9 +20,12 @@ bootstrap:  ## Bootstrap project
 govet:	## # Run go vet
 	go vet
 
+gofmt:	## # Run gofmt
+	gofmt -s -w main.go
+
 ##@ Delivery
 
-pack: bootstrap govet ## Create a runnable app image from source code
+pack: bootstrap govet gofmt ## Create a runnable app image from source code
 ifndef HAS_DOCKER
 	$(error Docker is required: https://www.docker.com/)
 endif
@@ -43,7 +46,7 @@ ifeq ($(strip $(GH_PAT)),)
 endif
 	echo $(GH_PAT) | docker login ghcr.io -u $(OWNER) --password-stdin
 
-publish: bootstrap govet cr-login ## Create a runnable app image from source code and Publish to registry
+publish: bootstrap govet gofmt cr-login ## Create a runnable app image from source code and Publish to registry
 ifndef HAS_BUILDPACKS
 	$(error Buildpacks is required: https://buildpacks.io/)
 endif
