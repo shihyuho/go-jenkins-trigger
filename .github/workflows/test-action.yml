@@ -1,0 +1,52 @@
+name: Test Jenkins Action
+on:
+  workflow_dispatch:
+jobs:
+  dump-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: dump-github-context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        id: dump-job-context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        id: dump-steps-context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        id: dump-runner-context
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        id: dump-strategy-context
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        id: dump-matrix-context
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - id: test-trigger-action-action
+        uses: shihyuho/go-jenkins-trigger@main
+        with:
+          jenkins-url: "${{ secrets.TEST_JENKINS_URL }}"
+          jenkins-user: "${{ secrets.TEST_JENKINS_USER }}"
+          jenkins-pat: "${{ secrets.TEST_JENKINS_PAT }}"
+          job: "${{ secrets.TEST_JOB }}"
+          params: "foo=${{ github.ref }}"
+          params-json: "${{ secrets.TEST_PARAM_JSON }}"
+          wait: "${{ secrets.TEST_WAIT }}"
+          poll-time: "${{ secrets.TEST_POLL_TIME }}"
+          max-attempts: "${{ secrets.TEST_MAX_APPTEMPTS }}"
