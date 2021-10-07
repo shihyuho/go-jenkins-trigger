@@ -1,6 +1,8 @@
 # Jenkins Job Trigger in Go
 
-Github Action to trigger Jenkins job and wait for the result.
+[![Go Report Cart](https://goreportcard.com/badge/github.com/shihyuho/go-jenkins-trigger)](https://goreportcard.com/report/github.com/shihyuho/go-jenkins-trigger)
+
+GitHub Action to trigger Jenkins job and wait for the result, written in Go
 
 ## Usage
 
