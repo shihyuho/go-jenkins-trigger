@@ -15,7 +15,7 @@ inputs:
     description: 'Personal access token (PAT) for accessing Jenkins. Store this in a secret for security'
     required: false
   insecure:
-    description: 'Allow insecure Jenkins server connections when using SSL'
+    description: 'true/false, Allow insecure Jenkins server connections when using SSL'
     required: false
     default: false
   job:
