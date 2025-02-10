@@ -1,0 +1,14 @@
+name: release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  releases:
+    name: release binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: buildpacks/github-actions/setup-pack@v5.0.0
+      - run: make publish GH_PAT=${{ secrets.GH_PAT }} TAG=${{ github.ref_name }}
