@@ -44,7 +44,7 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/shihyuho/go-jenkins-trigger:1.1'
+  image: 'docker://ghcr.io/shihyuho/go-jenkins-trigger:2.0'
   args:
     - --jenkins-url=${{ inputs.jenkins-url }}
     - --jenkins-user=${{ inputs.jenkins-user }}
