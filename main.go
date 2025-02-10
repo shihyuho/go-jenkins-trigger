@@ -129,7 +129,7 @@ func buildJob(ctx context.Context, jenkins *gojenkins.Jenkins, job *job) (int64,
   for _, folder := range job.Folders {
     parts := strings.Split(folder, "/")
     for _, part := range parts {
-      if trimmed := strings.TrimSpace(part); trimmed == "" {
+      if trimmed := strings.TrimSpace(part); trimmed != "" {
         f = append(f, trimmed)
       }
     }
