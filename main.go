@@ -147,6 +147,7 @@ func pollBuildResult(c config, jenkins *gojenkins.Jenkins, queueId int64) func()
 
 		build, err := jenkins.GetBuildFromQueueID(context.Background(), queueId)
 		if err != nil {
+			fmt.Printf("Failed to retrieve build object for job %s with queue ID %d", c.Job.Name, queueId)
 			return err
 		}
 
