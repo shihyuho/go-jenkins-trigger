@@ -51,3 +51,4 @@ jobs:
           wait: "${{ secrets.TEST_WAIT }}"
           poll-time: "${{ secrets.TEST_POLL_TIME }}"
           max-attempts: "${{ secrets.TEST_MAX_APPTEMPTS }}"
+          job-folders: "${{ secrets.TEST_JOB_FOLDERS }}"
