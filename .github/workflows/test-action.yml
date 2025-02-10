@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: test-trigger-action-action
-        uses: shihyuho/go-jenkins-trigger@main
+        uses: shihyuho/go-jenkins-trigger@${{ github.ref_name }}
         with:
           jenkins-url: "${{ secrets.TEST_JENKINS_URL }}"
           jenkins-user: "${{ secrets.TEST_JENKINS_USER }}"
