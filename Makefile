@@ -3,7 +3,7 @@ HAS_BUILDPACKS := $(shell command -v pack;)
 OWNER := shihyuho
 REPO := go-jenkins-trigger
 
-PACK_BUILDER ?= paketobuildpacks/builder:tiny
+PACK_BUILDER ?= paketobuildpacks/builder-jammy-tiny
 # GitHub PAT with write:packages scope: https://github.com/settings/tokens
 GH_PAT ?=
 # Image tag: https://github.com/shihyuho/go-jenkins-trigger/pkgs/container/go-jenkins-trigger
