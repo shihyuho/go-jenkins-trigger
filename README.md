@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: myjob
-        uses: shihyuho/go-jenkins-trigger@v1
+        uses: shihyuho/go-jenkins-trigger@v2
         with:
           jenkins-url: "${{ secrets.JENKINS_URL }}"
           jenkins-user: "${{ secrets.JENKINS_USER }}"
