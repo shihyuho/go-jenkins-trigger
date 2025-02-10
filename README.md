@@ -19,6 +19,7 @@ Check out [How to get the API Token for Jenkins](https://stackoverflow.com/quest
 | jenkins-pat | Personal access token (PAT) for accessing Jenkins. |
 | insecure | true/false. Allow insecure Jenkins server connections when using SSL (default false). |
 | job | The name of the Jenkins job to run. |
+| job-folders | The folder paths of the job, can specify multiple or separate parameters with slashes, e.g., foo/bar |
 | params | Optional, The parameters of the job in key=value format, can specify multiple or separate parameters with commas, e.g., foo=bar,baz=qux. |
 | params-json | Optional, The parameters of the job in JSON format, e.g., {"foo":"bar","baz":"qux"} |
 | wait | true/false. Wait for the job to complete, and return the results (default true). |
